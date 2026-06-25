@@ -75,6 +75,7 @@
       height: 120px;
       background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,236,179,0.5) 50%, var(--bg-yellow) 100%);
       pointer-events: none;
+      z-index: 0;
     }
 
     .topbar {
@@ -83,6 +84,7 @@
       justify-content: center;
       padding: 14px 20px;
       position: relative;
+      z-index: 2;
       min-height: 52px;
     }
     .topbar h1 {
@@ -95,6 +97,8 @@
     /* ============ 히어로 ============ */
     .hero-head {
       padding: 14px 24px 18px;
+      position: relative;
+      z-index: 2;
     }
     .hero-label {
       display: inline-block;
@@ -680,6 +684,107 @@
     }
     .a4-save-hint strong { color: var(--text-700); font-weight: 700; }
 
+    /* D: 활용법 토글 */
+    .d-acc {
+      border: 1px solid var(--line-soft);
+      border-radius: 12px;
+      margin-top: 12px;
+      overflow: hidden;
+    }
+    .d-acc summary {
+      cursor: pointer;
+      padding: 15px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-900);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      letter-spacing: -0.02em;
+      user-select: none;
+    }
+    .d-acc summary::-webkit-details-marker { display: none; }
+    .d-acc summary::after {
+      content: '';
+      width: 8px; height: 8px;
+      border-right: 2px solid var(--text-400);
+      border-bottom: 2px solid var(--text-400);
+      transform: rotate(45deg);
+      transition: transform 0.2s;
+      margin-top: -3px;
+      flex-shrink: 0;
+    }
+    .d-acc[open] summary::after { transform: rotate(-135deg); margin-top: 2px; }
+    .d-acc-body {
+      padding: 0 16px 15px;
+      font-size: 13.5px;
+      color: var(--text-700);
+      line-height: 1.7;
+      letter-spacing: -0.02em;
+    }
+    .d-acc-body strong { color: var(--text-900); font-weight: 700; }
+
+    /* D: 알바 멘트 */
+    .d-script {
+      margin: 18px 0 0;
+      padding: 16px 18px;
+      background: linear-gradient(135deg, #FFF8E0 0%, #FFEDB8 100%);
+      border-radius: 14px;
+    }
+    .d-script-label {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-900);
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .d-script-text {
+      margin: 0;
+      font-size: 13.5px;
+      color: var(--text-700);
+      line-height: 1.7;
+      letter-spacing: -0.02em;
+      word-break: keep-all;
+    }
+    /* D: 멘트 아래 이미지 자리 */
+    .d-script-img {
+      margin-top: 14px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .d-script-img img { width: 100%; display: block; border-radius: 10px; }
+    .d-script-img-ph {
+      min-height: 120px;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.6);
+      border: 1px dashed var(--brown-20, #D8C9B8);
+      border-radius: 10px;
+      font-size: 12.5px;
+      color: var(--text-500);
+      font-weight: 600;
+    }
+    /* D: 유의사항 */
+    .d-notice {
+      margin: 14px 0 16px;
+      padding: 14px 16px;
+      background: #FFF1E5;
+      border-radius: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .d-notice-ic { flex-shrink: 0; font-size: 15px; line-height: 1.5; }
+    .d-notice p {
+      margin: 0;
+      font-size: 12.5px;
+      color: var(--text-700);
+      line-height: 1.6;
+      letter-spacing: -0.02em;
+    }
+    .d-notice strong { color: var(--accent); font-weight: 700; }
+
     /* 종이쿠폰 장점 리스트 (C) */
     .merit-list {
       margin: 18px 0 0;
@@ -863,6 +968,33 @@
     }
 
     .hidden { display: none !important; }
+
+    /* 카카오 채널 추가 카드 */
+    .kakao-card {
+      margin-top: 4px;
+      padding: 22px 22px 24px;
+      border-radius: var(--r-card);
+      background: var(--card);
+      box-shadow: 0 8px 20px rgba(255, 143, 0, 0.20);
+      text-align: center;
+    }
+    .kakao-card-title {
+      font-size: 15.5px;
+      font-weight: 800;
+      color: var(--text-900);
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+      word-break: keep-all;
+    }
+    .kakao-card-desc {
+      font-size: 13px;
+      color: var(--text-500);
+      line-height: 1.7;
+      margin-bottom: 16px;
+      word-break: keep-all;
+    }
+    .kakao-card-desc strong { font-weight: 700; color: var(--text-700); }
+    .kakao-btn-wrap { display: flex; justify-content: center; }
 
     /* ============ 미리보기 비교 바 ============ */
     #preview-bar {
@@ -1145,7 +1277,7 @@
         <section class="greet-card">
           <p class="greet-title">영수증 쿠폰보다 편한 <span class="accent">종이 쿠폰</span>이에요</p>
           <p class="greet-desc">
-            똑같은 혜택의 종이 쿠폰을 <strong>무료로</strong> 보내드려요. 영수증 쿠폰보다 시각적으로 쿠폰 형태에 가깝고, 작은 사이즈라 손님께 전달하기 좋아요. 받아서 나눠주시기만 하면, 첫 주문당 <strong>1,500원</strong>이 똑같이 적립돼요.
+            영수증 쿠폰보다 시각적으로 쿠폰 형태에 가깝고, 작은 사이즈라 손님께 전달하기 좋아요. 받아서 나눠주시기만 하면, 첫 주문당 <strong>1,500원</strong>이 똑같이 적립돼요.
           </p>
           <ul class="merit-list">
             <li><span class="merit-ic">🖨️</span><span><strong>출력이 필요 없어요</strong><br>프린터·포스기 문제로 출력이 어려워도 OK</span></li>
@@ -1204,17 +1336,53 @@
       </div>
 
       <!-- ════════════════════════════════════════════
-           D: 개별 A4 홍보물 다운로드
+           D: 알바 맞춤 홍보물 다운로드
            ════════════════════════════════════════════ -->
       <div id="ver-d" class="ver-block hidden">
+
+        <!-- 활용법 (미리보기보다 먼저) -->
+        <section class="card">
+          <h3 class="card-title">알바 맞춤 홍보물 이렇게 활용해보세요!</h3>
+
+          <!-- 토글: 어떻게 쓰나요 -->
+          <details class="d-acc" open>
+            <summary>📌 어떻게 쓰는 건가요?</summary>
+            <div class="d-acc-body">
+              이 홍보물은 <span data-nickname>닉네임</span>님의 <strong>개별 QR코드</strong>로 만들어졌어요. 손님이 이 QR을 찍어 쿠폰을 받고 패스오더 첫 주문을 하면, 영수증 쿠폰과 똑같이 <strong>1건당 1,500원</strong>이 적립돼요.
+            </div>
+          </details>
+
+          <!-- 토글: 어디에 두나요 -->
+          <details class="d-acc">
+            <summary>🖼️ 어디에 두면 되나요?</summary>
+            <div class="d-acc-body">
+              다운받아 <strong>인쇄</strong>하거나 매장 내 <strong>디지털 사이니지</strong>에 띄워두면 돼요. 인쇄 후엔 간단히 거치해서 손님이 직접 보고 참여하게 하거나, 주문·픽업대 옆에 두고 가볍게 안내해도 좋아요.
+            </div>
+          </details>
+
+          <!-- 알바 멘트 -->
+          <div class="d-script">
+            <div class="d-script-label">💬 이렇게 안내해보세요</div>
+            <p class="d-script-text">"손님~ 지금 저희 매장에서 이벤트를 진행 중이거든요. 여기 QR코드 찍어서 쿠폰 받으시면 아메리카노를 100원에 드실 수 있어요! 손님이 참여해주시면 저도 적립금이 쌓여요. 시간 괜찮으시면 참여해보시고, 다음에 주문하실 때 아메리카노 100원에 드셔보세요!"</p>
+            <div class="d-script-img">
+              <img src="images/d_script.png" alt="안내 예시 이미지" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <span class="d-script-img-ph" style="display:none;">📷 안내 예시 이미지</span>
+            </div>
+          </div>
+        </section>
 
         <!-- 미리보기 + 다운로드 -->
         <section class="card">
           <h3 class="card-title">홍보물 미리보기</h3>
-          <p class="card-sub"><span data-nickname>닉네임</span>님의 개별 QR이 담긴 홍보물이에요</p>
+
+          <!-- 주의사항 (이미지 위) -->
+          <div class="d-notice">
+            <span class="d-notice-ic">⚠️</span>
+            <p>일정 기간 동안 QR코드로 참여한 내역이 없으면 <strong>QR코드가 비활성화</strong>돼요. 단순히 거치만 해두기보다, 손님께 한 번씩 안내도 함께 해주시면 좋아요.</p>
+          </div>
 
           <div class="a4-preview" id="a4-preview">
-            <img id="a4-img" alt="A4 홍보물 미리보기">
+            <img id="a4-img" alt="알바 맞춤 홍보물 미리보기">
             <div class="a4-fallback" id="a4-fallback">
               <div class="a4-fallback-ic">🖼️</div>
               <div class="a4-fallback-tx">홍보물 이미지를 불러오는 중이에요<br><small>이미지가 안 보이면 새로고침해 주세요</small></div>
@@ -1227,22 +1395,19 @@
           </a>
           <p class="a4-save-hint">📥 버튼이 안 받아지면, <strong>이미지를 길게 눌러 저장</strong>하세요</p>
         </section>
-
-        <!-- 장점 -->
-        <section class="card">
-          <h3 class="card-title">A4 홍보물의 장점</h3>
-          <ul class="merit-list">
-            <li><span class="merit-ic">📋</span><span><strong>참여 방법이 자세해요</strong><br>첫 주문 혜택과 참여 방법이 안내돼 손님께 설명하기 편해요</span></li>
-            <li><span class="merit-ic">📌</span><span><strong>붙여두기만 하면 끝</strong><br>매장에 붙여두고 QR 인식만 요청하면 돼요</span></li>
-            <li><span class="merit-ic">🙂</span><span><strong>직접 안 건네도 돼요</strong><br>손님이 보고 스스로 참여할 수 있어요</span></li>
-          </ul>
-        </section>
       </div>
+
+      <!-- 카카오 채널 추가 (전 버전 공통, 맨 끝) -->
+      <section class="kakao-card">
+        <div class="kakao-card-title">[패스오더 알바 지원팀] 채널을 추가해주세요!</div>
+        <div class="kakao-card-desc">영수증 쿠폰 출력 방법, 리워드 안내, 리마인드 메시지는 <strong>카카오톡 채널을 추가하셔야</strong> 받을 수 있어요.</div>
+        <div class="kakao-btn-wrap">
+          <div id="kakao-talk-channel-add-button" data-channel-public-id="_XWxdxhX" data-size="large" data-support-multiple-densities="true"></div>
+        </div>
+      </section>
 
     </div>
   </div>
-
-  <!-- 하단 고정 푸터: 종이 쿠폰 신청 (A/B/C 공통, D 제외) -->
   <div class="footer-cta hidden" id="footer-cta">
     <button type="button" class="footer-cta-btn" id="footer-cta-btn">
       <span class="footer-cta-ic" id="footer-cta-ic">📜</span>
@@ -1273,7 +1438,7 @@
       // ══════════════════════════════════════════════════
       //  Apps Script 트래킹/수집 URL (배포 후 교체)
       // ══════════════════════════════════════════════════
-      const API_URL = 'PASTE_YOUR_APPS_SCRIPT_EXEC_URL';
+      const API_URL = 'https://script.google.com/macros/s/AKfycbwyzHuT_CXgVCqiSgSMTN0iLrsfoyphFVmphbKiKIxxTpCnAuSAXp1vSk3d2OI0xrgOLw/exec';
 
       // ─── 파라미터 ───
       const params = new URLSearchParams(window.location.search);
@@ -1364,20 +1529,24 @@
           illust: 'paper'
         },
         d: {
-          label: '개별 A4 홍보물',
-          title: '<span data-nickname>' + nickname + '</span>님 전용<br><span class="accent">A4 홍보물</span> 다운로드',
-          sub: '매장에 붙여두면 손님이 QR로 바로 참여해요',
-          illust: 'money'
+          label: '알바 맞춤 홍보물',
+          title: '<span data-nickname>' + nickname + '</span>님 전용<br><span class="accent">알바 맞춤 홍보물</span>을 다운받으세요!',
+          sub: '',
+          illust: 'none'
         }
       };
       const h = HERO[version];
       heroLabel.textContent = h.label;
       heroTitle.innerHTML = h.title;
       heroSub.textContent = h.sub;
+      // 서브타이틀 비면 숨김
+      heroSub.style.display = h.sub ? '' : 'none';
+      // 일러스트: paper / money / none
       if (h.illust === 'paper') { illustMoney.classList.add('hidden'); illustPaper.classList.remove('hidden'); }
+      else if (h.illust === 'none') { illustMoney.classList.add('hidden'); illustPaper.classList.add('hidden'); }
       else { illustPaper.classList.add('hidden'); illustMoney.classList.remove('hidden'); }
 
-      const topMap = { c: '종이 쿠폰 신청', d: 'A4 홍보물 다운로드' };
+      const topMap = { c: '종이 쿠폰 신청', d: '알바 맞춤 홍보물' };
       document.getElementById('topbar-title').textContent = topMap[version] || '시급 2배 챌린지';
 
       // 해당 버전 블록만 표시
@@ -1388,6 +1557,12 @@
 
       // ─── 페이지 진입 트래킹 ───
       track('PAGE_VIEW');
+
+      // ─── 카카오 채널 추가 버튼 클릭 트래킹 ───
+      (function () {
+        const kb = document.getElementById('kakao-talk-channel-add-button');
+        if (kb) kb.addEventListener('click', function () { track('CHANNEL_ADD'); });
+      })();
 
       // ════════════════════════════════════════════════
       //  D: A4 홍보물 미리보기 + 다운로드 (구글 드라이브)
@@ -1719,6 +1894,22 @@
       })();
 
     })();
+  </script>
+
+  <!-- 카카오톡 채널 SDK -->
+  <script>
+    window.kakaoAsyncInit = function () {
+      Kakao.Channel.createAddChannelButton({ container: '#kakao-talk-channel-add-button' });
+    };
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.channel.min.js';
+      js.integrity = 'sha384-8oNFBbAHWVovcMLgR+mLbxqwoucixezSAzniBcjnEoumhfIbMIg4DrVsoiPEtlnt';
+      js.crossOrigin = 'anonymous';
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, 'script', 'kakao-js-sdk');
   </script>
 </body>
 </html>
