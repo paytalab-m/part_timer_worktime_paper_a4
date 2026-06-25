@@ -561,8 +561,8 @@
       position: fixed;
       left: 0; right: 0; bottom: 0;
       z-index: 9000;
-      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
-      background: linear-gradient(180deg, rgba(255,236,179,0) 0%, var(--bg-yellow) 30%);
+      padding: 18px 16px calc(20px + env(safe-area-inset-bottom));
+      background: linear-gradient(180deg, rgba(255,236,179,0) 0%, var(--bg-yellow) 45%);
     }
     .footer-cta-btn {
       width: 100%;
@@ -596,7 +596,7 @@
     .footer-cta-btn span:last-child { font-size: 15px; }
     .footer-cta-ic { font-size: 18px; }
     /* 푸터가 있는 버전은 본문 하단 여백 확보 */
-    body.has-footer .wrap { padding-bottom: 96px; }
+    body.has-footer .wrap { padding-bottom: 112px; }
 
     /* 바텀시트 */
     .sheet-overlay {
@@ -924,7 +924,7 @@
     /* ============ 하단 라이브 토스트 ============ */
     .live-toast {
       position: fixed;
-      bottom: 92px;
+      bottom: 108px;
       left: 50%;
       transform: translateX(-50%) translateY(20px);
       z-index: 9100;
@@ -1331,7 +1331,7 @@
             <svg viewBox="0 0 34 34" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 18 14 25 28 9"/></svg>
           </div>
           <p class="done-title">신청이 완료되었어요!</p>
-          <p class="done-desc">입력해 주신 주소로 <strong>종이 쿠폰</strong>을 보내드릴게요.<br><strong>영업일 기준 3~5일</strong> 안에 받으실 수 있어요.<br>도착하면 손님께 건네고 추가 시급을 받아보세요 💰</p>
+          <p class="done-desc"><strong>영업일 기준 3~5일</strong> 내에 입력해 주신 주소로 종이 쿠폰을 보내드릴게요.<br>도착하면 손님께 건네고 추가 시급을 받아보세요 💰</p>
         </section>
       </div>
 
@@ -1449,7 +1449,10 @@
       const a4Id      = params.get('a4_id') || '';   // D: 구글 드라이브 파일 ID
 
       // 버전: a(근무중)/b(근무전)/c(종이쿠폰)/d(A4 다운로드). FORCE_VERSION으로 미리보기 강제
-      let version = (window.FORCE_VERSION || params.get('version') || 'a').toLowerCase();
+      // 원본 version 값 (시트 저장용 - 예: a_brand, c_kakao 등 캠페인 구분 유지)
+      const versionRaw = (window.FORCE_VERSION || params.get('version') || 'a').toLowerCase();
+      // 화면 분기용 버전: 맨 앞 글자가 a/b/c/d 면 그 버전 (a_brand → a)
+      let version = versionRaw.charAt(0);
       if (!['a','b','c','d'].includes(version)) version = 'a';
       window.__VER__ = version;
 
@@ -1476,7 +1479,8 @@
         }
         const payload = {
           page: 'worktime_paper',
-          version: version,
+          version: versionRaw,
+          versionBase: version,
           event: eventName,
           sessionId, userId,
           nickname, storeName, phone, msgCode,
@@ -1626,7 +1630,7 @@
         // 폼 HTML (장점 + 실물 이미지 + 주소검색 + 동의 + 제출)
         function formHtml() {
           return ''
-            + '<p class="acc-merit" style="margin-bottom:14px;font-size:13.5px;color:var(--text-700);line-height:1.65;">똑같은 혜택의 <strong>종이 쿠폰</strong>을 무료로 보내드려요. 쿠폰 형태라 손님이 더 잘 받고, 작아서 건네기도 편해요. 받아서 나눠주시기만 하면 첫 주문당 <strong>1,500원</strong>이 똑같이 적립돼요.</p>'
+            + '<p class="acc-merit" style="margin-bottom:14px;font-size:13.5px;color:var(--text-700);line-height:1.65;">쿠폰 형태라 손님이 더 잘 받고, 작아서 건네기도 편해요. 받아서 나눠주시기만 하면 첫 주문당 <strong>1,500원</strong>이 똑같이 적립돼요.</p>'
             + '<img src="images/promo_paper.png" alt="종이 쿠폰 실물" style="width:100%;border-radius:12px;display:block;margin:0 0 16px;border:1px solid var(--line-soft);">'
             + '<div class="field">'
             +   '<label>받으실 주소 <span class="req">*</span></label>'
@@ -1640,7 +1644,7 @@
             +   '<p class="consent-detail">· 수집 항목: 배송지 주소<br>· 수집·이용 목적: 종이 쿠폰 배송<br>· 보유 기간: 배송 완료 후 즉시 파기</p>'
             + '</div>'
             + '<button type="button" class="submit-btn js-submit" disabled>종이 쿠폰 신청하기</button>'
-            + '<div class="done-card hidden js-done" style="margin-top:14px;"><div class="done-icon"><svg viewBox="0 0 34 34" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 18 14 25 28 9"/></svg></div><p class="done-title">신청이 완료되었어요!</p><p class="done-desc">입력해 주신 주소로 <strong>종이 쿠폰</strong>을 보내드릴게요.</p></div>';
+            + '<div class="done-card hidden js-done" style="margin-top:14px;"><div class="done-icon"><svg viewBox="0 0 34 34" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 18 14 25 28 9"/></svg></div><p class="done-title">신청이 완료되었어요!</p><p class="done-desc"><strong>영업일 기준 3~5일</strong> 내에 입력해 주신 주소로 종이 쿠폰을 보내드릴게요.</p></div>';
         }
 
         function bindForm(root) {
