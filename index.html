@@ -683,6 +683,15 @@
       line-height: 1.55;
     }
     .a4-save-hint strong { color: var(--text-700); font-weight: 700; }
+    .a4-prev-cap {
+      margin: 12px 0 16px;
+      font-size: 12.5px;
+      color: var(--text-500);
+      line-height: 1.6;
+      text-align: center;
+      letter-spacing: -0.02em;
+    }
+    .a4-prev-cap strong { color: var(--accent); font-weight: 700; }
 
     /* D: 활용법 토글 */
     .d-acc {
@@ -1388,12 +1397,13 @@
               <div class="a4-fallback-tx">홍보물 이미지를 불러오는 중이에요<br><small>이미지가 안 보이면 새로고침해 주세요</small></div>
             </div>
           </div>
+          <p class="a4-prev-cap">실제 홍보물에는 <span data-nickname>닉네임</span>님의 <strong>개별 QR코드</strong>가 들어가 있어요. 아래 버튼으로 다운받아 확인해 주세요.</p>
 
           <a id="a4-download" class="submit-btn a4-download-btn" target="_blank" rel="noopener">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;vertical-align:-3px;"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
-            홍보물 다운로드
+            홍보물 다운로드 (PDF)
           </a>
-          <p class="a4-save-hint">📥 버튼이 안 받아지면, <strong>이미지를 길게 눌러 저장</strong>하세요</p>
+          <p class="a4-save-hint">📥 버튼을 누르면 <strong>PDF 파일</strong>이 다운로드돼요</p>
         </section>
       </div>
 
@@ -1579,21 +1589,20 @@
         const fallback = document.getElementById('a4-fallback');
         const dl = document.getElementById('a4-download');
 
-        let previewUrl, downloadUrl;
-        if (a4Id) {
-          previewUrl  = 'https://drive.google.com/thumbnail?id=' + encodeURIComponent(a4Id) + '&sz=w1000';
-          downloadUrl = 'https://drive.google.com/uc?export=download&id=' + encodeURIComponent(a4Id);
-        } else {
-          // 미리보기/테스트용 샘플
-          previewUrl = 'images/promo_a4.png';
-          downloadUrl = 'images/promo_a4.png';
-        }
-
+        // 미리보기: 항상 공통 기본 이미지 (모든 알바 공통 — "이런 홍보물이에요" 안내용)
         img.onload = function () { fallback.classList.add('hidden'); };
         img.onerror = function () { fallback.classList.remove('hidden'); img.style.display = 'none'; };
-        img.src = previewUrl;
+        img.src = 'images/promo_a4.png';
+
+        // 다운로드: a4_id(드라이브 PDF 파일ID)로 각자 PDF 받기
+        let downloadUrl;
+        if (a4Id) {
+          downloadUrl = 'https://drive.google.com/uc?export=download&id=' + encodeURIComponent(a4Id);
+        } else {
+          downloadUrl = 'images/promo_a4.png'; // a4_id 없으면 샘플(테스트용)
+        }
         dl.href = downloadUrl;
-        dl.setAttribute('download', (nickname || 'A4') + '_홍보물.png');
+        dl.setAttribute('download', (nickname || 'A4') + '_홍보물.pdf');
         dl.addEventListener('click', function () { track('A4_DOWNLOAD', { a4Id: a4Id }); });
       }
 
