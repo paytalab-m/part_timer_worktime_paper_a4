@@ -1458,6 +1458,8 @@
       const phone     = params.get('phone') || '';
       const msgCode   = params.get('msg_code') || '';
       const a4Id      = params.get('a4_id') || '';   // D: 구글 드라이브 파일 ID
+      const staffId        = params.get('staff_identifier') || '';        // 알바 식별자
+      const participantId  = params.get('participant_identifier') || '';   // 참여자 식별자
 
       // 버전: a(근무중)/b(근무전)/c(종이쿠폰)/d(A4 다운로드). FORCE_VERSION으로 미리보기 강제
       // 원본 version 값 (시트 저장용 - 예: a_brand, c_kakao 등 캠페인 구분 유지)
@@ -1495,6 +1497,7 @@
           event: eventName,
           sessionId, userId,
           nickname, storeName, phone, msgCode,
+          staffIdentifier: staffId, participantIdentifier: participantId,
           referrer: document.referrer || '',
           userAgent: navigator.userAgent || '',
           timestamp: new Date().toISOString(),
