@@ -1455,7 +1455,15 @@
       const params = new URLSearchParams(window.location.search);
       const nickname = params.get('nickname') || '닉네임';
       const storeName = params.get('store_name') || params.get('store') || '매장명';
-      const phone     = params.get('phone') || '';
+      // 전화번호: 숫자만 추출해 010-XXXX-XXXX 형식으로 정리 (형식 불명 시 원본 유지)
+      function formatPhone(p) {
+        if (!p) return '';
+        var d = String(p).replace(/[^0-9]/g, '');
+        if (d.length === 11) return d.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+        if (d.length === 10) return d.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+        return p;
+      }
+      const phone     = formatPhone(params.get('phone') || '');
       const msgCode   = params.get('msg_code') || '';
       const a4Id      = params.get('a4_id') || '';   // D: 구글 드라이브 파일 ID
       const staffId        = params.get('staff_identifier') || '';        // 알바 식별자
