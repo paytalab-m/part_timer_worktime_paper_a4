@@ -1459,9 +1459,11 @@
       function formatPhone(p) {
         if (!p) return '';
         var d = String(p).replace(/[^0-9]/g, '');
+        // 앞자리 0이 떨어진 휴대폰 번호 복원: 10자리면서 '1'로 시작 → 앞에 0 붙임
+        if (d.length === 10 && d.charAt(0) === '1') d = '0' + d;
         if (d.length === 11) return d.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
         if (d.length === 10) return d.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-        return p;
+        return d || p;
       }
       const phone     = formatPhone(params.get('phone') || '');
       const msgCode   = params.get('msg_code') || '';
